@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+  shell-react-app:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+    depends_on:
+          - micro-app-one
+          - micro-app-two
+
+  micro-app-one:
+    stdin_open: true
+    build:
+      context: ../micro-app-one
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+
+  micro-app-two:
+    stdin_open: true
+    build:
+      context: ../micro-app-two
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3000"
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
